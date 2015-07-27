@@ -11,10 +11,8 @@ task :read_file => :environment do
   ]
 
     model_csvs.each do |model, csv|
-      #file = "lib/assets/#{csv}.csv"
-      file = "https://raw.githubusercontent.com/turingschool-examples/sales_engine/master/data/#{csv}.csv"
-
-      CSV.foreach(open(file).read(), headers: true, header_converters: :symbol) do |row|
+      file = "lib/assets/#{csv}.csv"
+      CSV.foreach(file, headers: true, header_converters: :symbol) do |row|
         model.find_or_create_by(row.to_hash)
       end
       puts "#{model} data imported"
