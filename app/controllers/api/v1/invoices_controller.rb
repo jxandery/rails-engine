@@ -1,4 +1,4 @@
-class Api::V1::InvoicesController < ApplicationController
+class Api::V1::InvoicesController < Api::V1::ApplicationController
 
   def index
     respond_with Invoice.all

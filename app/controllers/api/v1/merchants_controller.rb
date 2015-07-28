@@ -1,4 +1,4 @@
-class Api::V1::MerchantsController < ApplicationController
+class Api::V1::MerchantsController < Api::V1::ApplicationController
 
   def index
     respond_with Merchant.all

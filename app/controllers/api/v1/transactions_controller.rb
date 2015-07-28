@@ -1,4 +1,4 @@
-class Api::V1::TransactionsController < ApplicationController
+class Api::V1::TransactionsController < Api::V1::ApplicationController
 
   def index
     respond_with Transaction.all

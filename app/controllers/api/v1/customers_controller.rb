@@ -1,4 +1,4 @@
-class Api::V1::CustomersController < ApplicationController
+class Api::V1::CustomersController < Api::V1::ApplicationController
 
   def index
     respond_with Customer.all
