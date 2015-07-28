@@ -14,6 +14,7 @@ gem 'validates_email_format_of'
 gem 'sprockets-rails'
 gem 'sqlite3', '~> 1.3.10'
 gem 'sdoc', '~> 0.4.0', group: :doc
+gem 'responders', '~> 2.0'
 
 group :development, :test do
   gem 'pry'
