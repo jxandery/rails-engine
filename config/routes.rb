@@ -1,128 +1,41 @@
 Rails.application.routes.draw do
   namespace :api do
-  namespace :v1 do
-    get 'customers/index'
+    namespace :v1 do
+      get '/customers/find', to: 'customers#find'
+      get '/customers/find_all', to: 'customers#find_all'
+      get '/customers/random', to: 'customers#random'
+      resources :customers, except: [:new, :edit] do
+      end
+
+      get '/invoice_items/find', to: 'invoice_items#find'
+      get '/invoice_items/find_all', to: 'invoice_items#find_all'
+      get '/invoice_items/random', to: 'invoice_items#random'
+      resources :invoice_items, except: [:new, :edit] do
+      end
+
+      get '/invoices/find', to: 'invoices#find'
+      get '/invoices/find_all', to: 'invoices#find_all'
+      get '/invoices/random', to: 'invoices#random'
+      resources :invoices, except: [:new, :edit] do
+      end
+
+      get '/items/find', to: 'items#find'
+      get '/items/find_all', to: 'items#find_all'
+      get '/items/random', to: 'items#random'
+      resources :items, except: [:new, :edit] do
+      end
+
+      get '/merchants/find', to: 'merchants#find'
+      get '/merchants/find_all', to: 'merchants#find_all'
+      get '/merchants/random', to: 'merchants#random'
+      resources :merchants, except: [:new, :edit] do
+      end
+
+      get '/transactions/find', to: 'transactions#find'
+      get '/transactions/find_all', to: 'transactions#find_all'
+      get '/transactions/random', to: 'transactions#random'
+      resources :transactions, except: [:new, :edit] do
+      end
     end
   end
-
-  namespace :api do
-  namespace :v1 do
-    get 'customers/show'
-    end
-  end
-
-  namespace :api do
-  namespace :v1 do
-    get 'invoices/index'
-    end
-  end
-
-  namespace :api do
-  namespace :v1 do
-    get 'invoices/show'
-    end
-  end
-
-  namespace :api do
-  namespace :v1 do
-    get 'invoice_items/index'
-    end
-  end
-
-  namespace :api do
-  namespace :v1 do
-    get 'invoice_items/show'
-    end
-  end
-
-  namespace :api do
-  namespace :v1 do
-    get 'items/index'
-    end
-  end
-
-  namespace :api do
-  namespace :v1 do
-    get 'items/show'
-    end
-  end
-
-  namespace :api do
-  namespace :v1 do
-    get 'transactions/index'
-    end
-  end
-
-  namespace :api do
-  namespace :v1 do
-    get 'transactions/show'
-    end
-  end
-
-  namespace :api do
-  namespace :v1 do
-    get 'merchants/index'
-    end
-  end
-
-  namespace :api do
-  namespace :v1 do
-    get 'merchants/show'
-    end
-  end
-
-  # The priority is based upon order of creation: first created -> highest priority.
-  # See how all your routes lay out with "rake routes".
-
-  # You can have the root of your site routed with "root"
-  # root 'welcome#index'
-
-  # Example of regular route:
-  #   get 'products/:id' => 'catalog#view'
-
-  # Example of named route that can be invoked with purchase_url(id: product.id)
-  #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
-
-  # Example resource route (maps HTTP verbs to controller actions automatically):
-  #   resources :products
-
-  # Example resource route with options:
-  #   resources :products do
-  #     member do
-  #       get 'short'
-  #       post 'toggle'
-  #     end
-  #
-  #     collection do
-  #       get 'sold'
-  #     end
-  #   end
-
-  # Example resource route with sub-resources:
-  #   resources :products do
-  #     resources :comments, :sales
-  #     resource :seller
-  #   end
-
-  # Example resource route with more complex sub-resources:
-  #   resources :products do
-  #     resources :comments
-  #     resources :sales do
-  #       get 'recent', on: :collection
-  #     end
-  #   end
-
-  # Example resource route with concerns:
-  #   concern :toggleable do
-  #     post 'toggle'
-  #   end
-  #   resources :posts, concerns: :toggleable
-  #   resources :photos, concerns: :toggleable
-
-  # Example resource route within a namespace:
-  #   namespace :admin do
-  #     # Directs /admin/products/* to Admin::ProductsController
-  #     # (app/controllers/admin/products_controller.rb)
-  #     resources :products
-  #   end
 end
