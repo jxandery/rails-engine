@@ -29,4 +29,5 @@ group :development, :test do
   gem 'better_errors'
   gem 'faker', '~> 1.4.3'
   gem 'brakeman', :require => false
+  gem 'rspec-pride', '~> 3.1.0'
 end
