@@ -13,11 +13,11 @@ class Api::V1::TransactionsController < Api::V1::ApplicationController
   end
 
   def find
-    render :json Transaction.find_by(find_params)
+    render json: Transaction.find_by(find_params)
   end
 
   def find_all
-    render :json Transaction.where(find_params)
+    render json: Transaction.where(find_params)
   end
 
   private

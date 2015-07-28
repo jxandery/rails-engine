@@ -13,11 +13,11 @@ class Api::V1::CustomersController < Api::V1::ApplicationController
   end
 
   def find
-    render :json Customer.find_by(find_params)
+    render json: Customer.find_by(find_params)
   end
 
   def find_all
-    render :json Customer.where(find_params)
+    render json: Customer.where(find_params)
   end
 
   private
