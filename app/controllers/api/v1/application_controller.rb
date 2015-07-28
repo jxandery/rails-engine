@@ -1,6 +1,6 @@
 class Api::V1::ApplicationController < ApplicationController
   respond_to :json, :xml
-  before_action :authenticate, except: [:index, :show]
+  #before_action :authenticate, except: [:index, :show]
 
   def authenticate
     authenticate_or_request_with_http_basic('Please authenticate to use API') do |email, password|
