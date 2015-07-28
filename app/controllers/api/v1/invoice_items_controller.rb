@@ -13,11 +13,11 @@ class Api::V1::InvoiceItemsController < Api::V1::ApplicationController
   end
 
   def find
-    respond_with InvoiceItems.find_by(find_params)
+    render :json InvoiceItems.find_by(find_params)
   end
 
   def find_all
-    respond_with InvoiceItems.where(find_params)
+    render :json InvoiceItems.where(find_params)
   end
 
   private
