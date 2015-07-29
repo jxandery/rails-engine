@@ -24,4 +24,5 @@ RSpec.describe Item, type: :model do
 
       expect(item.invoice_items.count).to eq(2)
     end
+  end
 end
