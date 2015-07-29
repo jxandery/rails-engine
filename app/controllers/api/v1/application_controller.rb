@@ -1,4 +1,6 @@
 class Api::V1::ApplicationController < ApplicationController
+  include Api::V1::ApplicationHelper
+
   respond_to :json, :xml
   #before_action :authenticate, except: [:index, :show]
 

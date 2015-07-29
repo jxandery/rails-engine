@@ -43,6 +43,7 @@ Rails.application.routes.draw do
       resources :merchants, except: [:new, :edit] do
         get '/items', to: 'merchants#items'
         get '/invoices', to: 'merchants#invoices'
+        get '/revenue', to: 'merchants#revenue'
       end
 
       get '/transactions/find', to: 'transactions#find'

@@ -28,6 +28,11 @@ class Api::V1::MerchantsController < Api::V1::ApplicationController
     render json: Merchant.find(params[:merchant_id]).invoices
   end
 
+  def revenue
+    successful_merchant_invoices = successful_invoices.where(invoices: {merchant_id: params[:merchant_id]})
+    render json: successful_merchant_invoices.reduce {|sum, invoice| invoice_total(invoice.id)}
+  end
+
   private
 
   def find_params
