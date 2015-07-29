@@ -40,6 +40,8 @@ Rails.application.routes.draw do
       get '/merchants/find_all', to: 'merchants#find_all'
       get '/merchants/random', to: 'merchants#random'
       resources :merchants, except: [:new, :edit] do
+        get '/items', to: 'merchants#items'
+        get '/invoices', to: 'merchants#invoices'
       end
 
       get '/transactions/find', to: 'transactions#find'

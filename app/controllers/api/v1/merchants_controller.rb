@@ -20,6 +20,14 @@ class Api::V1::MerchantsController < Api::V1::ApplicationController
     render json: Merchant.where(find_params)
   end
 
+  def items
+    render json: Merchant.find(params[:merchant_id]).items
+  end
+
+  def invoices
+    render json: Merchant.find(params[:merchant_id]).invoices
+  end
+
   private
 
   def find_params
