@@ -1,6 +1,4 @@
 class Api::V1::CustomersController < Api::V1::ApplicationController
-  include Api::V1::ApplicationHelper
-
 
   def index
     respond_with Customer.all
