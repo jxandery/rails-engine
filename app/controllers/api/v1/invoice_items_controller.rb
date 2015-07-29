@@ -20,9 +20,17 @@ class Api::V1::InvoiceItemsController < Api::V1::ApplicationController
     render json: InvoiceItems.where(find_params)
   end
 
+  def invoice
+    render json: InvoiceItem.find(params[:invoice_item_id]).invoice
+  end
+
+  def item
+    render json: InvoiceItem.find(params[:invoice_item_id]).item
+  end
+
   private
 
   def find_params
-    params.permit(:item_id, :invoice_id, :quantity, :unit_price :created_at, :updated_at)
+    params.permit(:item_id, :invoice_id, :quantity, :unit_price, :created_at, :updated_at)
   end
 end
