@@ -29,8 +29,12 @@ class Api::V1::MerchantsController < Api::V1::ApplicationController
   end
 
   def revenue
-    successful_merchant_invoices = successful_invoices.where(invoices: {merchant_id: params[:merchant_id]})
     render json: successful_merchant_invoices.reduce {|sum, invoice| invoice_total(invoice.id)}
+  end
+
+  def favorite_customer
+    customer_id = customer_invoices.max_by {|customer_id| customer_id.count}.first
+    render json: Customer.find(customer_id)
   end
 
   private
