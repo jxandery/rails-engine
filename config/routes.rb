@@ -5,6 +5,8 @@ Rails.application.routes.draw do
       get '/customers/find_all', to: 'customers#find_all'
       get '/customers/random', to: 'customers#random'
       resources :customers, except: [:new, :edit] do
+        get '/invoices', to: 'customers#invoices'
+        get '/transactions', to: 'customers#transactions'
       end
 
       get '/invoice_items/find', to: 'invoice_items#find'
@@ -35,6 +37,7 @@ Rails.application.routes.draw do
       get '/transactions/find_all', to: 'transactions#find_all'
       get '/transactions/random', to: 'transactions#random'
       resources :transactions, except: [:new, :edit] do
+        get '/invoice', to: 'invoices#show'
       end
     end
   end
