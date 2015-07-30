@@ -31,4 +31,5 @@ group :development, :test do
   gem 'faker', '~> 1.4.3'
   gem 'brakeman', :require => false
   gem 'rspec-pride', '~> 3.1.0'
+  gem 'simplecov', :require => false
 end
