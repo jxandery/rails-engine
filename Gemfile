@@ -12,7 +12,6 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 gem 'validates_email_format_of'
 gem 'sprockets-rails'
-gem 'sqlite3', '~> 1.3.10'
 gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'responders', '~> 2.0'
 
@@ -25,7 +24,6 @@ group :development, :test do
   gem 'factory_girl_rails', '~> 4.0'
   gem 'web-console', '~> 2.0'
   gem 'spring'
-  gem 'simplecov'
   gem 'database_cleaner'
   gem 'better_errors'
   gem 'faker', '~> 1.4.3'
