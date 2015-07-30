@@ -98,4 +98,17 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
       expect(invoice_items_response.first['unit_price']).to eq(77)
     end
   end
+
+  context '#merchant' do
+    it 'returns merchant' do
+      merchant = Merchant.create!(name: 'Austen')
+      item = Item.create!(name: 'item9', description: 'description9', unit_price: 99, merchant_id: merchant.id)
+      get :merchant, item_id: item.id
+
+      expect(response).to have_http_status(:ok)
+      merchant_response = JSON.parse(response.body)
+      expect(merchant_response.class).to eq(Hash)
+      expect(merchant_response['name']).to eq('Austen')
+    end
+  end
 end
