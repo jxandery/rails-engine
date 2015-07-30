@@ -57,7 +57,7 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
     it 'returns specific transaction' do
       transaction1 = Transaction.create!(invoice_id: 4, credit_card_number: '78', credit_card_expiration_date: '01011978', result: 'success')
       transaction2 = Transaction.create!(invoice_id: 2, credit_card_number: '9807', credit_card_expiration_date: '04041978', result: 'pending')
-      get :find, invoice_id: transaction1.invoice_id, format: :json
+      get :find, invoice_id: transaction1.invoice_id
 
       expect(response).to have_http_status(:ok)
       transaction_response = JSON.parse(response.body)
@@ -65,6 +65,32 @@ RSpec.describe Api::V1::TransactionsController, type: :controller do
       expect(transaction1['credit_card_number']).to eq('78')
       expect(transaction1['credit_card_expiration_date']).to eq('01011978')
       expect(transaction1['result']).to eq('success')
+    end
+  end
+
+  context '#find_all' do
+    it 'returns all transaction' do
+      transaction1 = Transaction.create!(invoice_id: 4, credit_card_number: '78', credit_card_expiration_date: '01011978', result: 'success')
+      transaction2 = Transaction.create!(invoice_id: 2, credit_card_number: '78', credit_card_expiration_date: '04041978', result: 'pending')
+      get :find_all, credit_card_number: 78
+
+      expect(response).to have_http_status(:ok)
+      transaction_response = JSON.parse(response.body)
+      expect(transaction_response.count).to eq(2)
+    end
+  end
+
+  context '#invoice' do
+    it 'returns specific invoice' do
+      invoice = Invoice.create!(customer_id: 3, merchant_id: 7, status: "success")
+      transaction = Transaction.create!(invoice_id: invoice.id, credit_card_number: '78', credit_card_expiration_date: '01011978', result: 'success')
+      get :invoice, transaction_id: transaction.id
+
+      expect(response).to have_http_status(:ok)
+      transaction_response = JSON.parse(response.body)
+      expect(transaction_response['customer_id']).to eq(3)
+      expect(transaction_response['merchant_id']).to eq(7)
+      expect(transaction_response['status']).to eq('success')
     end
   end
 end
