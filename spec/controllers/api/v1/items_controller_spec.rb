@@ -66,4 +66,16 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
     end
   end
 
+  context '#find_all' do
+    it 'returns all item' do
+      item1 = Item.create!(name: 'item9', description: 'description9', unit_price: 99, merchant_id: 98)
+      item2 = Item.create!(name: 'item3', description: 'description9', unit_price: 39, merchant_id: 38)
+      get :find_all, description: 'description9'
+
+      expect(response).to have_http_status(:ok)
+      item = JSON.parse(response.body)
+      expect(item.count).to eq(2)
+    end
+  end
+
 end
