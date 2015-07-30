@@ -31,4 +31,24 @@ RSpec.describe Api::V1::ItemsController, type: :controller do
       expect(item['merchant_id']).to eq(88)
     end
   end
+
+  context '#random' do
+    it 'returns random item' do
+      Item.create!(name: 'item', description: 'description', unit_price: 19, merchant_id: 18)
+      Item.create!(name: 'item', description: 'description', unit_price: 29, merchant_id: 28)
+      Item.create!(name: 'item', description: 'description', unit_price: 39, merchant_id: 38)
+      Item.create!(name: 'item', description: 'description', unit_price: 49, merchant_id: 48)
+      Item.create!(name: 'item', description: 'description', unit_price: 59, merchant_id: 58)
+      Item.create!(name: 'item', description: 'description', unit_price: 69, merchant_id: 68)
+      Item.create!(name: 'item', description: 'description', unit_price: 79, merchant_id: 78)
+      Item.create!(name: 'item', description: 'description', unit_price: 89, merchant_id: 88)
+      Item.create!(name: 'item', description: 'description', unit_price: 99, merchant_id: 98)
+      get :random, format: :json
+
+      expect(response).to have_http_status(:ok)
+      item_response= JSON.parse(response.body)
+      expect(item_response).not_to eq(Item.all.sample)
+    end
+  end
+
 end
