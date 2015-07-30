@@ -37,6 +37,11 @@ class Api::V1::MerchantsController < Api::V1::ApplicationController
     render json: Customer.find(customer_id)
   end
 
+  def customers_with_pending_invoices
+    require "pry"; binding.pry
+    successful_merchant_invoices
+  end
+
   private
 
   def find_params
