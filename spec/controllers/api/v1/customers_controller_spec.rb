@@ -17,11 +17,15 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
     end
   end
 
-  describe "GET #show" do
-    it "returns http success" do
-      get :show
-      expect(response).to have_http_status(:success)
+  context '#show' do
+    it 'returns individual customer' do
+      customer = Customer.create!(first_name: 'cinnamon', last_name: 'none')
+      get :show, id: customer.id, format: :json
+
+      expect(response).to have_http_status(:ok)
+      customer_response = JSON.parse(response.body)
+      expect(customer_response['first_name']).to eq('cinnamon')
+      expect(customer_response['last_name']).to eq('none')
     end
   end
-
 end
