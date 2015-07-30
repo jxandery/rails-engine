@@ -5,6 +5,8 @@ require 'spec_helper'
 require 'rspec/rails'
 require 'capybara/rspec'
 require 'capybara/rails'
+require 'simplecov'
+SimpleCov.start
 
 # Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }
 
