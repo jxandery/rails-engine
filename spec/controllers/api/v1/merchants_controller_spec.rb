@@ -43,6 +43,7 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
       merchant_response = JSON.parse(response.body)
       expect(merchant_response).not_to eq(Merchant.all.sample)
     end
+  end
 
   context '#find' do
     it 'returns specific merchant' do
@@ -56,6 +57,16 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
     end
   end
 
-  end
+  context '#find_all' do
+    it 'returns all merchants' do
+      Merchant.create!(name: 'Auste8')
+      Merchant.create!(name: 'Auste9')
+      get :find_all, first_name: 'billy'
 
+      expect(response).to have_http_status(:ok)
+      merchant_response = JSON.parse(response.body)
+      expect(merchant_response.second['name']).to eq('Auste9')
+      expect(merchant_response.count).to eq(2)
+    end
+  end
 end
