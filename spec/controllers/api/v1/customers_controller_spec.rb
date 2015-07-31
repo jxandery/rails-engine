@@ -61,4 +61,15 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
     end
   end
 
+  context '#find_all' do
+    it 'returns all customers' do
+      Customer.create!(first_name: 'billy', last_name: 'last1')
+      Customer.create!(first_name: 'billy', last_name: 'last2')
+      get :find_all, first_name: 'billy'
+
+      expect(response).to have_http_status(:ok)
+      invoice_response = JSON.parse(response.body)
+      expect(invoice_response.count).to eq(2)
+    end
+  end
 end
