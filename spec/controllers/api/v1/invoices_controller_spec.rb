@@ -50,7 +50,7 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
   end
 
   context '#find' do
-    it 'returns specific item' do
+    it 'returns specific invoice' do
       invoice1 = Invoice.create!(customer_id: 89, merchant_id: 88, status: "tbd")
       invoice2 = Invoice.create!(customer_id: 99, merchant_id: 89, status: "fair")
       get :find, customer_id: invoice2.customer_id
@@ -60,6 +60,18 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
       expect(invoice_response['customer_id']).to eq(99)
       expect(invoice_response['merchant_id']).to eq(89)
       expect(invoice_response['status']).to eq('fair')
+    end
+  end
+
+  context '#find_all' do
+    it 'returns all invoices' do
+      Invoice.create!(customer_id: 89, merchant_id: 88, status: "tbd")
+      Invoice.create!(customer_id: 99, merchant_id: 88, status: "fair")
+      get :find_all, merchant_id: 88
+
+      expect(response).to have_http_status(:ok)
+      invoice_response = JSON.parse(response.body)
+      expect(invoice_response.count).to eq(2)
     end
   end
 
