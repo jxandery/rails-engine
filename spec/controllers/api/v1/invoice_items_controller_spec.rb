@@ -31,4 +31,24 @@ RSpec.describe Api::V1::InvoiceItemsController, type: :controller do
       expect(invoice_item['unit_price']).to eq(77)
     end
   end
+
+  context '#random' do
+    it 'returns random invoice_item' do
+      InvoiceItem.create!(invoice_id: 19, item_id: 18, quantity: 101, unit_price: 17)
+      InvoiceItem.create!(invoice_id: 29, item_id: 28, quantity: 102, unit_price: 27)
+      InvoiceItem.create!(invoice_id: 39, item_id: 38, quantity: 103, unit_price: 37)
+      InvoiceItem.create!(invoice_id: 49, item_id: 48, quantity: 104, unit_price: 47)
+      InvoiceItem.create!(invoice_id: 59, item_id: 58, quantity: 105, unit_price: 57)
+      InvoiceItem.create!(invoice_id: 69, item_id: 68, quantity: 106, unit_price: 67)
+      InvoiceItem.create!(invoice_id: 79, item_id: 78, quantity: 107, unit_price: 77)
+      InvoiceItem.create!(invoice_id: 89, item_id: 88, quantity: 108, unit_price: 87)
+      InvoiceItem.create!(invoice_id: 99, item_id: 98, quantity: 109, unit_price: 97)
+
+      get :random, format: :json
+
+      expect(response).to have_http_status(:ok)
+      invoice_item_response= JSON.parse(response.body)
+      expect(invoice_item_response).not_to eq(InvoiceItem.all.sample)
+    end
+  end
 end
