@@ -79,4 +79,18 @@ RSpec.describe Api::V1::InvoiceItemsController, type: :controller do
     end
   end
 
+  context '#invoice' do
+    it 'returns specific invoice' do
+      invoice = Invoice.create!(customer_id: 3, merchant_id: 7, status: "success")
+      invoice_item1 = InvoiceItem.create!(invoice_id: invoice.id, item_id: 18, quantity: 119, unit_price: 17)
+      get :invoice, invoice_item_id: invoice_item1.id
+
+      expect(response).to have_http_status(:ok)
+      invoice_response = JSON.parse(response.body)
+      expect(invoice_response['customer_id']).to eq(3)
+      expect(invoice_response['merchant_id']).to eq(7)
+      expect(invoice_response['status']).to eq('success')
+    end
+  end
+
 end
