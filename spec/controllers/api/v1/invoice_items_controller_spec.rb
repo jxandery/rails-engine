@@ -67,4 +67,16 @@ RSpec.describe Api::V1::InvoiceItemsController, type: :controller do
     end
   end
 
+  context '#find_all' do
+    it 'returns all invoice_item' do
+      invoice_item1 = InvoiceItem.create!(invoice_id: 19, item_id: 18, quantity: 119, unit_price: 17)
+      invoice_item2 = InvoiceItem.create!(invoice_id: 19, item_id: 98, quantity: 109, unit_price: 97)
+      get :find_all, invoice_id: 19
+
+      expect(response).to have_http_status(:ok)
+      invoice_item = JSON.parse(response.body)
+      expect(invoice_item.count).to eq(2)
+    end
+  end
+
 end
