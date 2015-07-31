@@ -48,4 +48,17 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
     end
   end
 
+  context '#find' do
+    it 'returns specific customer' do
+      customer1 = Customer.create!(first_name: 'customer1', last_name: 'last1')
+      customer2 = Customer.create!(first_name: 'customer2', last_name: 'last2')
+      get :find, first_name: customer2.first_name
+
+      expect(response).to have_http_status(:ok)
+      customer_response = JSON.parse(response.body)
+      expect(customer_response['first_name']).to eq('customer2')
+      expect(customer_response['last_name']).to eq('last2')
+    end
+  end
+
 end
