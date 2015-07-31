@@ -51,4 +51,20 @@ RSpec.describe Api::V1::InvoiceItemsController, type: :controller do
       expect(invoice_item_response).not_to eq(InvoiceItem.all.sample)
     end
   end
+
+  context '#find' do
+    it 'returns specific invoice_item' do
+      invoice_item1 = InvoiceItem.create!(invoice_id: 19, item_id: 18, quantity: 119, unit_price: 17)
+      invoice_item2 = InvoiceItem.create!(invoice_id: 99, item_id: 98, quantity: 109, unit_price: 97)
+      get :find, item_id: invoice_item2.item_id
+
+      expect(response).to have_http_status(:ok)
+      invoice_item = JSON.parse(response.body)
+      expect(invoice_item['invoice_id']).to eq(99)
+      expect(invoice_item['item_id']).to eq(98)
+      expect(invoice_item['quantity']).to eq(109)
+      expect(invoice_item['unit_price']).to eq(97)
+    end
+  end
+
 end
