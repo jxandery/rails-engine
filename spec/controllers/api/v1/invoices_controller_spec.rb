@@ -88,4 +88,17 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
       expect(customer_response['last_name']).to eq('red')
     end
   end
+
+  context '#merchant' do
+    it 'returns merchant' do
+      merchant = Merchant.create!(name: 'Austen')
+      invoice = Invoice.create!(customer_id: 99, merchant_id: merchant.id, status: "fair")
+      get :merchant, invoice_id: invoice.id
+
+      expect(response).to have_http_status(:ok)
+      merchant_response = JSON.parse(response.body)
+      expect(merchant_response.class).to eq(Hash)
+      expect(merchant_response['name']).to eq('Austen')
+    end
+  end
 end
