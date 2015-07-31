@@ -28,4 +28,24 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
       expect(customer_response['last_name']).to eq('none')
     end
   end
+
+  context '#random' do
+    it 'returns random customer' do
+      Customer.create!(first_name: 'customer1', last_name: 'last1')
+      Customer.create!(first_name: 'customer2', last_name: 'last2')
+      Customer.create!(first_name: 'customer3', last_name: 'last3')
+      Customer.create!(first_name: 'customer4', last_name: 'last4')
+      Customer.create!(first_name: 'customer5', last_name: 'last5')
+      Customer.create!(first_name: 'customer6', last_name: 'last6')
+      Customer.create!(first_name: 'customer7', last_name: 'last7')
+      Customer.create!(first_name: 'customer8', last_name: 'last8')
+      Customer.create!(first_name: 'customer8', last_name: 'last9')
+      get :random, format: :json
+
+      expect(response).to have_http_status(:ok)
+      customer_response = JSON.parse(response.body)
+      expect(customer_response).not_to eq(Customer.all.sample)
+    end
+  end
+
 end
