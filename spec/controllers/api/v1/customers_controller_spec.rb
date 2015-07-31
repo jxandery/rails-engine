@@ -72,4 +72,20 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
       expect(invoice_response.count).to eq(2)
     end
   end
+
+  context '#invoices' do
+    it 'returns transactions' do
+      customer = Customer.create!(first_name: 'strawberry', last_name: 'red')
+      invoice1 = Invoice.create!(customer_id: customer.id, merchant_id: 9, status: "success")
+      invoice2 = Invoice.create!(customer_id: customer.id, merchant_id: 3, status: "success")
+      get :invoices, customer_id: customer.id
+
+      expect(response).to have_http_status(:ok)
+      invoice_response = JSON.parse(response.body)
+      expect(invoice_response.count).to eq(2)
+      expect(invoice_response.first['merchant_id']).to eq(9)
+      expect(invoice_response.second['merchant_id']).to eq(3)
+    end
+  end
+
 end
