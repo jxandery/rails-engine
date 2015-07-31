@@ -74,7 +74,7 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
   end
 
   context '#invoices' do
-    it 'returns transactions' do
+    it 'returns invoices' do
       customer = Customer.create!(first_name: 'strawberry', last_name: 'red')
       invoice1 = Invoice.create!(customer_id: customer.id, merchant_id: 9, status: "success")
       invoice2 = Invoice.create!(customer_id: customer.id, merchant_id: 3, status: "success")
