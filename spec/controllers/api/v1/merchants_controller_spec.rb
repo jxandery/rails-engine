@@ -43,6 +43,19 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
       merchant_response = JSON.parse(response.body)
       expect(merchant_response).not_to eq(Merchant.all.sample)
     end
+
+  context '#find' do
+    it 'returns specific merchant' do
+      Merchant.create!(name: 'Auste8')
+      Merchant.create!(name: 'Auste9')
+      get :find, name: 'Auste9', format: :json
+
+      expect(response).to have_http_status(:ok)
+      merchant_response = JSON.parse(response.body)
+      expect(merchant_response['name']).to eq('Auste9')
+    end
+  end
+
   end
 
 end
