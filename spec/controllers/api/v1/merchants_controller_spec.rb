@@ -81,8 +81,23 @@ RSpec.describe Api::V1::MerchantsController, type: :controller do
       expect(response).to have_http_status(:ok)
       invoice_response = JSON.parse(response.body)
       expect(invoice_response.count).to eq(2)
-      expect(invoice_response.first['merchant_id']).to eq(invoice1.merchant_id)
-      expect(invoice_response.second['merchant_id']).to eq(invoice2.merchant_id)
+      expect(invoice_response.first['merchant_id']).to eq(merchant.id)
+      expect(invoice_response.second['merchant_id']).to eq(merchant.id)
+    end
+  end
+
+  context '#items' do
+    it 'returns items' do
+      merchant = Merchant.create!(name: 'Auste8')
+      item1 = Item.create!(name: 'item9', description: 'description9', unit_price: 99, merchant_id: merchant.id)
+      item2 = Item.create!(name: 'item3', description: 'description9', unit_price: 39, merchant_id: merchant.id)
+      get :items, merchant_id: merchant.id
+
+      expect(response).to have_http_status(:ok)
+      items_response = JSON.parse(response.body)
+      expect(items_response.count).to eq(2)
+      expect(items_response.first['merchant_id']).to eq(merchant.id)
+      expect(items_response.second['merchant_id']).to eq(merchant.id)
     end
   end
 
