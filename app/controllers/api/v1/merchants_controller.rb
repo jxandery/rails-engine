@@ -29,7 +29,8 @@ class Api::V1::MerchantsController < Api::V1::ApplicationController
   end
 
   def revenue
-    render json: successful_merchant_invoices.reduce {|sum, invoice| invoice_total(invoice.id)}
+    x = successful_merchant_invoices.map {|invoice| invoice_total(invoice)}.reduce(:+)
+    render json: {:revenue => "#{x}"}.to_json
   end
 
   def favorite_customer
