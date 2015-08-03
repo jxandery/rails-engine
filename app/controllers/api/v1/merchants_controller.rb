@@ -34,8 +34,11 @@ class Api::V1::MerchantsController < Api::V1::ApplicationController
   end
 
   def favorite_customer
-    customer_id = customer_invoices.max_by {|customer_id| customer_id.count}.first
-    render json: Customer.find(customer_id)
+    customers = {}
+    customer_invoices.each do |customer_id, invoices|
+      customers[invoices.count] = customer_id
+    end
+    render json: Customer.find(customers.max[1])
   end
 
   def customers_with_pending_invoices
