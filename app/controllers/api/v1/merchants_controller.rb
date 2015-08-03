@@ -42,8 +42,10 @@ class Api::V1::MerchantsController < Api::V1::ApplicationController
   end
 
   def customers_with_pending_invoices
-    require "pry"; binding.pry
-    successful_merchant_invoices
+    customers = (Invoice.all - successful_merchant_invoices).map do |invoice|
+      Customer.find(invoice.customer_id)
+    end
+    render json: customers
   end
 
   private
