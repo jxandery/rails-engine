@@ -36,5 +36,10 @@ module Api::V1::ApplicationHelper
     InvoiceItem.find_by(id: params[:invoice_item_id])
   end
 
+  def find_invoice
+    Invoice.find_by(id: params[:invoice_id])
+  end
+
+
 end
 

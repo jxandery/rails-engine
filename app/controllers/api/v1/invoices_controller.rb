@@ -20,9 +20,9 @@ class Api::V1::InvoicesController < Api::V1::ApplicationController
     render json: Invoice.where(find_params)
   end
 
-  def customer
-    render json: Invoice.find(params[:invoice_id]).customer
-  end
+  #def customer
+    #render json: Invoice.find(params[:invoice_id]).customer
+  #end
 
   def merchant
     render json: Invoice.find(params[:invoice_id]).merchant
