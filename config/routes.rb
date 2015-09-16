@@ -40,7 +40,7 @@ Rails.application.routes.draw do
       get '/merchants/find',      to: 'merchants#find'
       get '/merchants/find_all',  to: 'merchants#find_all'
       get '/merchants/random',    to: 'merchants#random'
-      resources :merchants,                         except: [:new, :edit] do
+      resources   :merchants,                       except: [:new, :edit] do
         resources :items,                           only:   [:index], module: :merchants
         resources :invoices,                        only:   [:index], module: :merchants
         resources :customers_with_pending_invoices, only:   [:index], module: :merchants
@@ -48,11 +48,11 @@ Rails.application.routes.draw do
         resource  :favorite_customer,               only:    :show,   module: :merchants
       end
 
-      get '/transactions/find', to: 'transactions#find'
+      get '/transactions/find',     to: 'transactions#find'
       get '/transactions/find_all', to: 'transactions#find_all'
-      get '/transactions/random', to: 'transactions#random'
-      resources :transactions, except: [:new, :edit] do
-        get '/invoice', to: 'transactions#invoice'
+      get '/transactions/random',   to: 'transactions#random'
+      resources     :transactions,  except: [:new, :edit] do
+        resource    :invoice,       only: :show, module: :transactions
       end
     end
   end

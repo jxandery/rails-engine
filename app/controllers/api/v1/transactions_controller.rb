@@ -20,10 +20,6 @@ class Api::V1::TransactionsController < Api::V1::ApplicationController
     render json: Transaction.where(find_params)
   end
 
-  def invoice
-    render json: Transaction.find(params[:transaction_id]).invoice
-  end
-
   private
 
   def find_params

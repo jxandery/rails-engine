@@ -48,6 +48,10 @@ module Api::V1::ApplicationHelper
     Merchant.find_by(id: params[:merchant_id])
   end
 
+  def find_transaction
+    Transaction.find_by(id: params[:transaction_id])
+  end
+
   def revenue
     successful_merchant_invoices.map {|invoice| invoice_total(invoice)}.reduce(:+)
   end
