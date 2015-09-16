@@ -26,4 +26,10 @@ module Api::V1::ApplicationHelper
   def find_customer
     Customer.find_by(id: params[:customer_id])
   end
+
+  def successful_customer_invoices
+    invoices = successful_invoices.where(invoices: {customer_id: params[:customer_id]})
+    invoices.group_by {|x| x.merchant_id}.first.last.first.merchant_id
+  end
 end
+

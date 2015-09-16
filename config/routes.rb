@@ -7,8 +7,7 @@ Rails.application.routes.draw do
       resources :customers, except: [:new, :edit] do
         resources :invoices, only: [:index], module: :customers
         resources :transactions, only: [:index], module: :customers
-        get '/favorite_merchant', to: 'customers#favorite_merchant'
-        resource :favorite_merchant, only: :show
+        resource :favorite_merchant, only: :show, module: :customers
       end
 
       get '/invoice_items/find', to: 'invoice_items#find'
