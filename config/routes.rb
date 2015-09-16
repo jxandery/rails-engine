@@ -1,21 +1,21 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      get '/customers/find', to: 'customers#find'
-      get '/customers/find_all', to: 'customers#find_all'
-      get '/customers/random', to: 'customers#random'
-      resources :customers, except: [:new, :edit] do
-        resources :invoices, only: [:index], module: :customers
-        resources :transactions, only: [:index], module: :customers
-        resource :favorite_merchant, only: :show, module: :customers
+      get '/customers/find',      to: 'customers#find'
+      get '/customers/find_all',  to: 'customers#find_all'
+      get '/customers/random',    to: 'customers#random'
+      resources :customers,             except: [:new, :edit] do
+        resources :invoices,            only:   [:index], module: :customers
+        resources :transactions,        only:   [:index], module: :customers
+        resource  :favorite_merchant,   only:    :show,   module: :customers
       end
 
-      get '/invoice_items/find', to: 'invoice_items#find'
-      get '/invoice_items/find_all', to: 'invoice_items#find_all'
-      get '/invoice_items/random', to: 'invoice_items#random'
-      resources :invoice_items, except: [:new, :edit] do
-        resource :invoice, only: :show, module: :invoice_items
-        resource :item, only: :show, module: :invoice_items
+      get '/invoice_items/find',      to: 'invoice_items#find'
+      get '/invoice_items/find_all',  to: 'invoice_items#find_all'
+      get '/invoice_items/random',    to: 'invoice_items#random'
+      resources   :invoice_items,   except: [:new, :edit] do
+        resource  :invoice,         only:    :show, module: :invoice_items
+        resource  :item,            only:    :show, module: :invoice_items
       end
 
       get '/invoices/find',     to: 'invoices#find'
@@ -33,8 +33,10 @@ Rails.application.routes.draw do
       get '/items/find_all', to: 'items#find_all'
       get '/items/random', to: 'items#random'
       resources :items, except: [:new, :edit] do
-        get '/invoice_items', to: 'items#invoice_items'
-        get '/merchant', to: 'items#merchant'
+        resources :invoice_items, only:   [:index], module: :items
+        resource  :merchant,      only:    :show,   module: :items
+        #get '/invoice_items', to: 'items#invoice_items'
+        #get '/merchant', to: 'items#merchant'
       end
 
       get '/merchants/find', to: 'merchants#find'
