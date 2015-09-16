@@ -37,9 +37,10 @@ Rails.application.routes.draw do
         resource  :merchant,      only:    :show,   module: :items
       end
 
-      get '/merchants/find',      to: 'merchants#find'
-      get '/merchants/find_all',  to: 'merchants#find_all'
-      get '/merchants/random',    to: 'merchants#random'
+      get '/merchants/find',          to: 'merchants#find'
+      get '/merchants/find_all',      to: 'merchants#find_all'
+      get '/merchants/random',        to: 'merchants#random'
+      get '/merchants/most_items',    to: 'merchants/most_items#index'
       resources   :merchants,                       except: [:new, :edit] do
         resources :items,                           only:   [:index], module: :merchants
         resources :invoices,                        only:   [:index], module: :merchants

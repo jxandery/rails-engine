@@ -69,5 +69,14 @@ module Api::V1::ApplicationHelper
       Customer.find(invoice.customer_id)
     end
   end
+
+  def item_count(merchant_id)
+    Merchant.find(merchant_id).invoices.joins(:invoice_items).sum(:quantity)
+  end
+
+  def most_items
+    merchants = Merchant.all.sort_by {|merch| item_count(merch.id)}.reverse!
+    merchants.first(params["quantity"].to_i).to_json
+  end
 end
 
