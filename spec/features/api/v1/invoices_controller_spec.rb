@@ -1,10 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe Api::V1::InvoicesController, type: :controller do
-  context '#index' do
+RSpec.describe "/api/v1/invoices", type: :request do
+
+  context 'GET /api/v1/invoices' do
     it 'returns all the invoices' do
       Invoice.create!(customer_id: 99, merchant_id: 88, status: "fair")
-      get :index, format: :json
+      get "/api/v1/invoices", format: :json
 
       expect(response).to have_http_status(:ok)
       invoices = JSON.parse(response.body)
@@ -17,10 +18,10 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
     end
   end
 
-  context '#show' do
+  context 'GET /api/v1/invoices/:id' do
     it 'returns individual invoice' do
       invoice = Invoice.create!(customer_id: 99, merchant_id: 88, status: "fair")
-      get :show, id: invoice.id, format: :json
+      get "/api/v1/invoices/#{invoice.id}", format: :json
 
       expect(response).to have_http_status(:ok)
       invoice_response = JSON.parse(response.body)
@@ -30,7 +31,7 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
     end
   end
 
-  context '#random' do
+  context 'GET /api/v1/invoices/random' do
     it 'returns random invoice' do
       Invoice.create!(customer_id: 19, merchant_id: 81, status: "fair")
       Invoice.create!(customer_id: 29, merchant_id: 82, status: "fair")
@@ -41,7 +42,8 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
       Invoice.create!(customer_id: 79, merchant_id: 87, status: "fair")
       Invoice.create!(customer_id: 89, merchant_id: 88, status: "fair")
       Invoice.create!(customer_id: 99, merchant_id: 89, status: "fair")
-      get :random, format: :json
+      get "/api/v1/invoices/random", format: :json
+      #get :random, format: :json
 
       expect(response).to have_http_status(:ok)
       invoice_response= JSON.parse(response.body)
@@ -49,11 +51,11 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
     end
   end
 
-  context '#find' do
+  context 'GET /api/v1/invoices/find' do
     it 'returns specific invoice' do
       invoice1 = Invoice.create!(customer_id: 89, merchant_id: 88, status: "tbd")
       invoice2 = Invoice.create!(customer_id: 99, merchant_id: 89, status: "fair")
-      get :find, customer_id: invoice2.customer_id
+      get "/api/v1/invoices/find", customer_id: invoice2.customer_id, format: :json
 
       expect(response).to have_http_status(:ok)
       invoice_response = JSON.parse(response.body)
@@ -63,11 +65,11 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
     end
   end
 
-  context '#find_all' do
+  context 'GET /api/v1/invoices/find_all' do
     it 'returns all invoices' do
       Invoice.create!(customer_id: 89, merchant_id: 88, status: "tbd")
       Invoice.create!(customer_id: 99, merchant_id: 88, status: "fair")
-      get :find_all, merchant_id: 88
+      get "/api/v1/invoices/find_all", merchant_id: 88, format: :json
 
       expect(response).to have_http_status(:ok)
       invoice_response = JSON.parse(response.body)
@@ -75,11 +77,11 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
     end
   end
 
-  context '#customer' do
+  context 'GET /api/v1/invoices/:id/customer' do
     it 'returns customer' do
       customer = Customer.create!(first_name: 'strawberry', last_name: 'red')
       invoice = Invoice.create!(customer_id: customer.id, merchant_id: 88, status: "fair")
-      get :customer, invoice_id: invoice.id
+      get "/api/v1/invoices/#{invoice.id}/customer", format: :json
 
       expect(response).to have_http_status(:ok)
       customer_response = JSON.parse(response.body)
@@ -89,11 +91,11 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
     end
   end
 
-  context '#merchant' do
+  context 'GET /api/v1/invoices/:id/merchant' do
     it 'returns merchant' do
       merchant = Merchant.create!(name: 'Austen')
       invoice = Invoice.create!(customer_id: 99, merchant_id: merchant.id, status: "fair")
-      get :merchant, invoice_id: invoice.id
+      get "/api/v1/invoices/#{invoice.id}/merchant", format: :json
 
       expect(response).to have_http_status(:ok)
       merchant_response = JSON.parse(response.body)
@@ -102,14 +104,14 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
     end
   end
 
-  context '#transactions' do
+  context 'GET /api/v1/invoices/:id/transactions' do
     it 'returns transactions' do
       merchant = Merchant.create!(name: 'Austen')
       customer = Customer.create!(first_name: 'strawberry', last_name: 'red')
       invoice = Invoice.create!(customer_id: customer.id, merchant_id: merchant.id, status: "success")
       transaction1 = Transaction.create!(invoice_id: invoice.id, credit_card_number: '78', credit_card_expiration_date: '01011978', result: 'success')
       transaction2 = Transaction.create!(invoice_id: invoice.id, credit_card_number: '88', credit_card_expiration_date: '08081978', result: 'success')
-      get :transactions, invoice_id: invoice.id
+      get "/api/v1/invoices/#{invoice.id}/transactions", format: :json
 
       expect(response).to have_http_status(:ok)
       transactions_response = JSON.parse(response.body)
@@ -121,7 +123,7 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
     end
   end
 
-  context '#invoice_items' do
+  context 'GET /api/v1/invoices/:id/invoice_items' do
     it 'returns invoice_items' do
       merchant = Merchant.create!(name: 'Austen')
       item = Item.create!(name: 'item9', description: 'description9', unit_price: 99, merchant_id: merchant.id)
@@ -129,7 +131,7 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
       invoice1 = Invoice.create!(customer_id: customer.id, merchant_id: merchant.id, status: "success")
       invoice_items1 = InvoiceItem.create!(invoice_id: invoice1.id, item_id: item.id, quantity: 100, unit_price: 77)
       invoice_items2 = InvoiceItem.create!(invoice_id: invoice1.id, item_id: item.id, quantity: 111, unit_price: 11)
-      get :invoice_items, invoice_id: invoice1.id
+      get "/api/v1/invoices/#{invoice1.id}/invoice_items", format: :json
 
       expect(response).to have_http_status(:ok)
       invoice_items_response = JSON.parse(response.body)
@@ -145,7 +147,7 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
     end
   end
 
-  context '#items' do
+  context 'GET /api/v1/invoices/:id/items' do
     it 'returns items' do
       merchant = Merchant.create!(name: 'Austen')
       customer = Customer.create!(first_name: 'strawberry', last_name: 'red')
@@ -154,7 +156,7 @@ RSpec.describe Api::V1::InvoicesController, type: :controller do
       item2 = Item.create!(name: 'item2', description: 'description2', unit_price: 29, merchant_id: merchant.id)
       invoice_items1 = InvoiceItem.create!(invoice_id: invoice.id, item_id: item1.id, quantity: 100, unit_price: 77)
       invoice_items2 = InvoiceItem.create!(invoice_id: invoice.id, item_id: item2.id, quantity: 111, unit_price: 11)
-      get :items, invoice_id: invoice.id
+      get "/api/v1/invoices/#{invoice.id}/items", format: :json
 
       expect(response).to have_http_status(:ok)
       items_response = JSON.parse(response.body)
