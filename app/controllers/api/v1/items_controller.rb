@@ -24,9 +24,6 @@ class Api::V1::ItemsController < Api::V1::ApplicationController
     render json: Item.find(params[:item_id]).invoice_items
   end
 
-  #def merchant
-    #render json: Item.find(params[:item_id]).merchant
-  #end
   private
 
   def find_params
