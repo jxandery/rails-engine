@@ -22,4 +22,8 @@ module Api::V1::ApplicationHelper
   def customer_invoices
     successful_merchant_invoices.group_by {|invoice| invoice.customer_id}
   end
+
+  def find_customer
+    Customer.find_by(id: params[:customer_id])
+  end
 end
