@@ -1,7 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe "/api/v1/invoice_items", type: :request do
-  context '#index' do
+
+  context 'GET /api/v1/invoice_items' do
     it 'returns all the invoice_items' do
       InvoiceItem.create!(invoice_id: 99, item_id: 88, quantity: 100, unit_price: 77)
       get "/api/v1/invoice_items", format: :json
@@ -18,7 +19,7 @@ RSpec.describe "/api/v1/invoice_items", type: :request do
     end
   end
 
-  context '#show' do
+  context 'GET /api/v1/invoice_items/:id' do
     it 'returns individual invoice_item' do
       invoice_item = InvoiceItem.create!(invoice_id: 99, item_id: 88, quantity: 100, unit_price: 77)
       get "/api/v1/invoice_items/#{invoice_item.id}", format: :json
@@ -32,7 +33,7 @@ RSpec.describe "/api/v1/invoice_items", type: :request do
     end
   end
 
-  context '#random' do
+  context 'GET /api/v1/invoice_items/random' do
     it 'returns random invoice_item' do
       InvoiceItem.create!(invoice_id: 19, item_id: 18, quantity: 101, unit_price: 17)
       InvoiceItem.create!(invoice_id: 29, item_id: 28, quantity: 102, unit_price: 27)
@@ -51,7 +52,7 @@ RSpec.describe "/api/v1/invoice_items", type: :request do
     end
   end
 
-  context '#find' do
+  context 'GET /api/v1/invoice_items/find' do
     it 'returns specific invoice_item' do
       invoice_item1 = InvoiceItem.create!(invoice_id: 19, item_id: 18, quantity: 119, unit_price: 17)
       invoice_item2 = InvoiceItem.create!(invoice_id: 99, item_id: 98, quantity: 109, unit_price: 97)
@@ -66,7 +67,7 @@ RSpec.describe "/api/v1/invoice_items", type: :request do
     end
   end
 
-  context '#find_all' do
+  context 'GET /api/v1/invoice_items/find_all' do
     it 'returns all invoice_item' do
       invoice_item1 = InvoiceItem.create!(invoice_id: 19, item_id: 18, quantity: 119, unit_price: 17)
       invoice_item2 = InvoiceItem.create!(invoice_id: 19, item_id: 98, quantity: 109, unit_price: 97)
@@ -78,7 +79,7 @@ RSpec.describe "/api/v1/invoice_items", type: :request do
     end
   end
 
-  context '#invoice' do
+  context 'GET /api/v1/invoice_items/:invoice_item_id/invoice' do
     it 'returns specific invoice' do
       invoice = Invoice.create!(customer_id: 3, merchant_id: 7, status: "success")
       invoice_item1 = InvoiceItem.create!(invoice_id: invoice.id, item_id: 18, quantity: 119, unit_price: 17)
@@ -92,7 +93,7 @@ RSpec.describe "/api/v1/invoice_items", type: :request do
     end
   end
 
-  context '#item' do
+  context 'GET /api/v1/invoice_items/:invoice_item_id/item' do
     it 'returns specific item' do
       item = Item.create!(name: 'item9', description: 'description9', unit_price: 99, merchant_id: 9)
       invoice_item1 = InvoiceItem.create!(invoice_id: 8, item_id: item.id, quantity: 119, unit_price: 17)
