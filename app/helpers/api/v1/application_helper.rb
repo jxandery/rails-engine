@@ -39,7 +39,5 @@ module Api::V1::ApplicationHelper
   def find_invoice
     Invoice.find_by(id: params[:invoice_id])
   end
-
-
 end
 

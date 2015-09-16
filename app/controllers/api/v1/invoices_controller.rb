@@ -20,26 +20,6 @@ class Api::V1::InvoicesController < Api::V1::ApplicationController
     render json: Invoice.where(find_params)
   end
 
-  #def customer
-    #render json: Invoice.find(params[:invoice_id]).customer
-  #end
-
-  def merchant
-    render json: Invoice.find(params[:invoice_id]).merchant
-  end
-
-  def transactions
-    render json: Invoice.find(params[:invoice_id]).transactions
-  end
-
-  def invoice_items
-    render json: Invoice.find(params[:invoice_id]).invoice_items
-  end
-
-  def items
-    render json: Invoice.find(params[:invoice_id]).items
-  end
-
   private
 
   def find_params
