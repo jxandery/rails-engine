@@ -69,7 +69,7 @@ RSpec.describe "/api/v1/transactions", type: :request do
   end
 
   context 'GET /api/v1/transactions/find_all' do
-   it 'returns all transactions' do
+    it 'returns all transactions' do
       transaction1 = Transaction.create!(invoice_id: 4, credit_card_number: '78', credit_card_expiration_date: '01011978', result: 'success')
       transaction2 = Transaction.create!(invoice_id: 2, credit_card_number: '78', credit_card_expiration_date: '04041978', result: 'pending')
       get "/api/v1/transactions/find_all", credit_card_number: 78, format: :json
@@ -77,20 +77,6 @@ RSpec.describe "/api/v1/transactions", type: :request do
       expect(response).to have_http_status(:ok)
       transaction_response = JSON.parse(response.body)
       expect(transaction_response.count).to eq(2)
-    end
-  end
-
-  context 'GET /api/v1/transactions/:transaction_id/invoice' do
-    it 'returns specific invoice' do
-      invoice = Invoice.create!(customer_id: 3, merchant_id: 7, status: "success")
-      transaction = Transaction.create!(invoice_id: invoice.id, credit_card_number: '78', credit_card_expiration_date: '01011978', result: 'success')
-      get "/api/v1/transactions/#{transaction.id}/invoice", format: :json
-
-      expect(response).to have_http_status(:ok)
-      transaction_response = JSON.parse(response.body)
-      expect(transaction_response['customer_id']).to eq(3)
-      expect(transaction_response['merchant_id']).to eq(7)
-      expect(transaction_response['status']).to eq('success')
     end
   end
 end
