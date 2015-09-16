@@ -20,34 +20,6 @@ class Api::V1::MerchantsController < Api::V1::ApplicationController
     render json: Merchant.where(find_params)
   end
 
-  def items
-    render json: Merchant.find(params[:merchant_id]).items
-  end
-
-  def invoices
-    render json: Merchant.find(params[:merchant_id]).invoices
-  end
-
-  def revenue
-    x = successful_merchant_invoices.map {|invoice| invoice_total(invoice)}.reduce(:+)
-    render json: {:revenue => "#{x}"}.to_json
-  end
-
-  def favorite_customer
-    customers = {}
-    customer_invoices.each do |customer_id, invoices|
-      customers[invoices.count] = customer_id
-    end
-    render json: Customer.find(customers.max[1])
-  end
-
-  def customers_with_pending_invoices
-    customers = (Invoice.all - successful_merchant_invoices).map do |invoice|
-      Customer.find(invoice.customer_id)
-    end
-    render json: customers
-  end
-
   private
 
   def find_params

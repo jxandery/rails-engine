@@ -29,25 +29,23 @@ Rails.application.routes.draw do
         resource  :customer,      only:    :show,   module: :invoices
       end
 
-      get '/items/find', to: 'items#find'
-      get '/items/find_all', to: 'items#find_all'
-      get '/items/random', to: 'items#random'
-      resources :items, except: [:new, :edit] do
+      get '/items/find',      to: 'items#find'
+      get '/items/find_all',  to: 'items#find_all'
+      get '/items/random',    to: 'items#random'
+      resources   :items,         except: [:new, :edit] do
         resources :invoice_items, only:   [:index], module: :items
         resource  :merchant,      only:    :show,   module: :items
-        #get '/invoice_items', to: 'items#invoice_items'
-        #get '/merchant', to: 'items#merchant'
       end
 
-      get '/merchants/find', to: 'merchants#find'
-      get '/merchants/find_all', to: 'merchants#find_all'
-      get '/merchants/random', to: 'merchants#random'
-      resources :merchants, except: [:new, :edit] do
-        get '/items', to: 'merchants#items'
-        get '/invoices', to: 'merchants#invoices'
-        get '/revenue', to: 'merchants#revenue'
-        get '/favorite_customer', to: 'merchants#favorite_customer'
-        get '/customers_with_pending_invoices', to: 'merchants#customers_with_pending_invoices'
+      get '/merchants/find',      to: 'merchants#find'
+      get '/merchants/find_all',  to: 'merchants#find_all'
+      get '/merchants/random',    to: 'merchants#random'
+      resources :merchants,                         except: [:new, :edit] do
+        resources :items,                           only:   [:index], module: :merchants
+        resources :invoices,                        only:   [:index], module: :merchants
+        resources :customers_with_pending_invoices, only:   [:index], module: :merchants
+        resource  :revenue,                         only:    :show,   module: :merchants
+        resource  :favorite_customer,               only:    :show,   module: :merchants
       end
 
       get '/transactions/find', to: 'transactions#find'

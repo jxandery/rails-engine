@@ -43,5 +43,27 @@ module Api::V1::ApplicationHelper
   def find_item
     Item.find_by(id: params[:item_id])
   end
+
+  def find_merchant
+    Merchant.find_by(id: params[:merchant_id])
+  end
+
+  def revenue
+    successful_merchant_invoices.map {|invoice| invoice_total(invoice)}.reduce(:+)
+  end
+
+  def favorite_customer
+    customers = {}
+    customer_invoices.each do |customer_id, invoices|
+      customers[invoices.count] = customer_id
+    end
+    customers
+  end
+
+  def customers_with_pending_invoices
+    (Invoice.all - successful_merchant_invoices).map do |invoice|
+      Customer.find(invoice.customer_id)
+    end
+  end
 end
 
