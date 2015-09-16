@@ -6,7 +6,7 @@ Rails.application.routes.draw do
       get '/customers/random', to: 'customers#random'
       resources :customers, except: [:new, :edit] do
         resources :invoices, only: [:index], module: :customers
-        get '/transactions', to: 'customers#transactions'
+        resources :transactions, only: [:index], module: :customers
         get '/favorite_merchant', to: 'customers#favorite_merchant'
         resource :favorite_merchant, only: :show
       end
