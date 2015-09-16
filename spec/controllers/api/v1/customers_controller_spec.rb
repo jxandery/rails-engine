@@ -1,11 +1,11 @@
 require 'rails_helper'
 
-RSpec.describe Api::V1::CustomersController, type: :controller do
+RSpec.describe "/api/v1/customers", type: :request do
 
-  context '#index' do
+  context 'GET /api/v1/customers' do
     it 'returns all the customers' do
       Customer.create!(first_name: 'strawberry', last_name: 'red')
-      get :index, format: :json
+      get "/api/v1/customers", format: :json
 
       expect(response).to have_http_status(:ok)
       customers = JSON.parse(response.body)
@@ -20,7 +20,7 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
   context '#show' do
     it 'returns individual customer' do
       customer = Customer.create!(first_name: 'cinnamon', last_name: 'none')
-      get :show, id: customer.id, format: :json
+      get "/api/v1/customers/#{customer.id}", format: :json
 
       expect(response).to have_http_status(:ok)
       customer_response = JSON.parse(response.body)
@@ -40,7 +40,8 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
       Customer.create!(first_name: 'customer7', last_name: 'last7')
       Customer.create!(first_name: 'customer8', last_name: 'last8')
       Customer.create!(first_name: 'customer8', last_name: 'last9')
-      get :random, format: :json
+      get "/api/v1/customers/random", format: :json
+      #get :random, format: :json
 
       expect(response).to have_http_status(:ok)
       customer_response = JSON.parse(response.body)
@@ -52,7 +53,7 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
     it 'returns specific customer' do
       customer1 = Customer.create!(first_name: 'customer1', last_name: 'last1')
       customer2 = Customer.create!(first_name: 'customer2', last_name: 'last2')
-      get :find, first_name: customer2.first_name
+      get "/api/v1/customers/find", first_name: customer2.first_name, format: :json
 
       expect(response).to have_http_status(:ok)
       customer_response = JSON.parse(response.body)
@@ -65,7 +66,7 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
     it 'returns all customers' do
       Customer.create!(first_name: 'billy', last_name: 'last1')
       Customer.create!(first_name: 'billy', last_name: 'last2')
-      get :find_all, first_name: 'billy'
+      get "/api/v1/customers/find_all", first_name: 'billy', format: :json
 
       expect(response).to have_http_status(:ok)
       invoice_response = JSON.parse(response.body)
@@ -74,11 +75,11 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
   end
 
   context '#invoices' do
-    it 'returns invoices' do
+    it 'returns invoices', type: :request do
       customer = Customer.create!(first_name: 'strawberry', last_name: 'red')
       invoice1 = Invoice.create!(customer_id: customer.id, merchant_id: 9, status: "success")
       invoice2 = Invoice.create!(customer_id: customer.id, merchant_id: 3, status: "success")
-      get :invoices, customer_id: customer.id
+      get "/api/v1/customers/#{customer.id}/invoices"
 
       expect(response).to have_http_status(:ok)
       invoice_response = JSON.parse(response.body)
@@ -95,7 +96,7 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
       invoice = Invoice.create!(customer_id: customer.id, merchant_id: merchant.id, status: "success")
       transaction1 = Transaction.create!(invoice_id: invoice.id, credit_card_number: '78', credit_card_expiration_date: '01011978', result: 'success')
       transaction2 = Transaction.create!(invoice_id: invoice.id, credit_card_number: '88', credit_card_expiration_date: '08081978', result: 'success')
-      get :transactions, customer_id: invoice.customer_id
+      get "/api/v1/customers/#{customer.id}/transactions"
 
       expect(response).to have_http_status(:ok)
       transactions_response = JSON.parse(response.body)
@@ -118,7 +119,7 @@ RSpec.describe Api::V1::CustomersController, type: :controller do
       transaction1 = Transaction.create!(invoice_id: invoice1.id, credit_card_number: '78', credit_card_expiration_date: '01011978', result: 'success')
       transaction2 = Transaction.create!(invoice_id: invoice1.id, credit_card_number: '88', credit_card_expiration_date: '08081978', result: 'success')
       transaction3 = Transaction.create!(invoice_id: invoice2.id, credit_card_number: '78', credit_card_expiration_date: '01011978', result: 'success')
-      get :favorite_merchant, customer_id: customer.id
+      get "/api/v1/customers/#{customer.id}/favorite_merchant"
 
       expect(response).to have_http_status(:ok)
       favorite_merchant_response = JSON.parse(response.body)
