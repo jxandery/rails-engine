@@ -14,8 +14,8 @@ Rails.application.routes.draw do
       get '/invoice_items/find_all', to: 'invoice_items#find_all'
       get '/invoice_items/random', to: 'invoice_items#random'
       resources :invoice_items, except: [:new, :edit] do
-        get '/invoice', to: 'invoice_items#invoice'
-        get '/item', to: 'invoice_items#item'
+        resource :invoice, only: :show, module: :invoice_items
+        resource :item, only: :show, module: :invoice_items
       end
 
       get '/invoices/find', to: 'invoices#find'
