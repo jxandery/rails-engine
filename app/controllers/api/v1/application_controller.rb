@@ -11,4 +11,10 @@ class Api::V1::ApplicationController < ApplicationController
       return true if user && user.authenticate(password)
     end
   end
+
+  def find_customer
+    Customer.find_by(id: params[:customer_id])
+  end
+  helper_method :find_customer
+
 end
