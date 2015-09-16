@@ -17,7 +17,7 @@ RSpec.describe "/api/v1/customers", type: :request do
     end
   end
 
-  context '#show' do
+  context 'GET /api/v1/customers/:id' do
     it 'returns individual customer' do
       customer = Customer.create!(first_name: 'cinnamon', last_name: 'none')
       get "/api/v1/customers/#{customer.id}", format: :json
@@ -29,7 +29,7 @@ RSpec.describe "/api/v1/customers", type: :request do
     end
   end
 
-  context '#random' do
+  context 'GET /api/v1/customers/random' do
     it 'returns random customer' do
       Customer.create!(first_name: 'customer1', last_name: 'last1')
       Customer.create!(first_name: 'customer2', last_name: 'last2')
@@ -41,7 +41,6 @@ RSpec.describe "/api/v1/customers", type: :request do
       Customer.create!(first_name: 'customer8', last_name: 'last8')
       Customer.create!(first_name: 'customer8', last_name: 'last9')
       get "/api/v1/customers/random", format: :json
-      #get :random, format: :json
 
       expect(response).to have_http_status(:ok)
       customer_response = JSON.parse(response.body)
@@ -49,7 +48,7 @@ RSpec.describe "/api/v1/customers", type: :request do
     end
   end
 
-  context '#find' do
+  context 'GET /api/v1/customers/find' do
     it 'returns specific customer' do
       customer1 = Customer.create!(first_name: 'customer1', last_name: 'last1')
       customer2 = Customer.create!(first_name: 'customer2', last_name: 'last2')
@@ -62,7 +61,7 @@ RSpec.describe "/api/v1/customers", type: :request do
     end
   end
 
-  context '#find_all' do
+  context 'GET /api/v1/customers/find_all' do
     it 'returns all customers' do
       Customer.create!(first_name: 'billy', last_name: 'last1')
       Customer.create!(first_name: 'billy', last_name: 'last2')
@@ -74,7 +73,7 @@ RSpec.describe "/api/v1/customers", type: :request do
     end
   end
 
-  context '#invoices' do
+  context 'GET /api/v1/customers/:customer_id/invoices' do
     it 'returns invoices', type: :request do
       customer = Customer.create!(first_name: 'strawberry', last_name: 'red')
       invoice1 = Invoice.create!(customer_id: customer.id, merchant_id: 9, status: "success")
@@ -89,7 +88,7 @@ RSpec.describe "/api/v1/customers", type: :request do
     end
   end
 
-  context '#transactions' do
+  context 'GET /api/v1/customers/:customer_id/transactions' do
     it 'returns transactions' do
       merchant = Merchant.create!(name: 'Austen')
       customer = Customer.create!(first_name: 'strawberry', last_name: 'red')
@@ -108,7 +107,7 @@ RSpec.describe "/api/v1/customers", type: :request do
     end
   end
 
-  context '#favorite_merchant' do
+  context 'GET /api/v1/customers/:customer_id/favorite_merchant' do
     it 'returns favorite_merchant' do
       customer = Customer.create!(first_name: 'strawberry', last_name: 'red')
       merchant1 = Merchant.create!(name: 'Jorge')
