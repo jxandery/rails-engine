@@ -1,5 +1,4 @@
 class Api::V1::CustomersController < Api::V1::ApplicationController
-
   def index
     respond_with Customer.all
   end
@@ -20,14 +19,11 @@ class Api::V1::CustomersController < Api::V1::ApplicationController
     render json: Customer.where(find_params)
   end
 
-  def invoices
-    render json: find_customer.invoices
-  end
-
   def transactions
     render json: find_customer.transactions
   end
 
+  #customer/:id/favorite_merchant
   def favorite_merchant
     render json: Merchant.find(successful_customer_invoices)
   end
