@@ -41,12 +41,13 @@ Rails.application.routes.draw do
       get '/merchants/find_all',      to: 'merchants#find_all'
       get '/merchants/random',        to: 'merchants#random'
       get '/merchants/most_items',    to: 'merchants/most_items#index'
-      get '/merchants/most_revenue',    to: 'merchants/most_revenues#index'
+      get '/merchants/most_revenue',  to: 'merchants/most_revenues#index'
       resources   :merchants,                       except: [:new, :edit] do
         resources :items,                           only:   [:index], module: :merchants
         resources :invoices,                        only:   [:index], module: :merchants
         resources :customers_with_pending_invoices, only:   [:index], module: :merchants
-        resource  :revenue,                         only:    :show,   module: :merchants
+        resource  :revenue_by_date,                 only:    :show,   module: :merchants
+        resource  :total_revenue,                   only:    :show,   module: :merchants
         resource  :favorite_customer,               only:    :show,   module: :merchants
       end
 
