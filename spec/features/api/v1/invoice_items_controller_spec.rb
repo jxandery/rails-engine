@@ -15,7 +15,7 @@ RSpec.describe "/api/v1/invoice_items", type: :request do
       expect(invoice_item['invoice_id']).to eq(99)
       expect(invoice_item['item_id']).to eq(88)
       expect(invoice_item['quantity']).to eq(100)
-      expect(invoice_item['unit_price']).to eq(77)
+      expect(invoice_item['unit_price']).to eq("77.0")
     end
   end
 
@@ -29,7 +29,7 @@ RSpec.describe "/api/v1/invoice_items", type: :request do
       expect(invoice_item['invoice_id']).to eq(99)
       expect(invoice_item['item_id']).to eq(88)
       expect(invoice_item['quantity']).to eq(100)
-      expect(invoice_item['unit_price']).to eq(77)
+      expect(invoice_item['unit_price']).to eq(77.0)
     end
   end
 
@@ -63,7 +63,7 @@ RSpec.describe "/api/v1/invoice_items", type: :request do
       expect(invoice_item['invoice_id']).to eq(99)
       expect(invoice_item['item_id']).to eq(98)
       expect(invoice_item['quantity']).to eq(109)
-      expect(invoice_item['unit_price']).to eq(97)
+      expect(invoice_item['unit_price']).to eq("97.0")
     end
   end
 

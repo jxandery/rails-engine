@@ -19,7 +19,7 @@ RSpec.describe "/api/v1/items", type: :request do
       expect(invoice_items_response.first['invoice_id']).to eq(invoice1.id)
       expect(invoice_items_response.first['item_id']).to eq(item.id)
       expect(invoice_items_response.first['quantity']).to eq(100)
-      expect(invoice_items_response.first['unit_price']).to eq(77)
+      expect(invoice_items_response.first['unit_price']).to eq("77.0")
     end
   end
 end

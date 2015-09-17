@@ -15,9 +15,9 @@ RSpec.describe "/api/v1/merchants", type: :request do
       InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 1, unit_price: 10)
       InvoiceItem.create!(invoice_id: invoice1.id, item_id: item1.id, quantity: 2, unit_price: 10)
       InvoiceItem.create!(invoice_id: invoice2.id, item_id: item2.id, quantity: 3, unit_price: 30)
-      transaction1 = Transaction.create!(invoice_id: invoice1.id, credit_card_number: '78', credit_card_expiration_date: '01011978', result: 'success')
-      transaction2 = Transaction.create!(invoice_id: invoice2.id, credit_card_number: '78', credit_card_expiration_date: '01011978', result: 'success')
-      transaction3 = Transaction.create!(invoice_id: invoice3.id, credit_card_number: '9807', credit_card_expiration_date: '04041978', result: 'pending')
+      transaction1 = Transaction.create!(invoice_id: invoice1.id, credit_card_number: '78', result: 'success')
+      transaction2 = Transaction.create!(invoice_id: invoice2.id, credit_card_number: '78', result: 'success')
+      transaction3 = Transaction.create!(invoice_id: invoice3.id, credit_card_number: '9807', result: 'pending')
       get "/api/v1/merchants/#{merchant.id}/revenue", format: :json
 
       expect(response).to have_http_status(:ok)

@@ -14,7 +14,7 @@ RSpec.describe "/api/v1/items", type: :request do
       item = items.first
       expect(item['name']).to eq('Austen')
       expect(item['description']).to eq('hunger academy alum')
-      expect(item['unit_price']).to eq(99)
+      expect(item['unit_price']).to eq("99.0")
       expect(item['merchant_id']).to eq(88)
     end
   end
@@ -28,7 +28,7 @@ RSpec.describe "/api/v1/items", type: :request do
       item_response = JSON.parse(response.body)
       expect(item['name']).to eq('Austen')
       expect(item['description']).to eq('hunger academy alum')
-      expect(item['unit_price']).to eq(99)
+      expect(item['unit_price']).to eq(99.0)
       expect(item['merchant_id']).to eq(88)
     end
   end
@@ -62,7 +62,7 @@ RSpec.describe "/api/v1/items", type: :request do
       item = JSON.parse(response.body)
       expect(item['name']).to eq('item3')
       expect(item['description']).to eq('description3')
-      expect(item['unit_price']).to eq(39)
+      expect(item['unit_price']).to eq("39.0")
       expect(item['merchant_id']).to eq(38)
     end
   end

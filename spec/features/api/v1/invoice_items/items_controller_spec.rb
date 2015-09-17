@@ -12,7 +12,7 @@ RSpec.describe "/api/v1/invoice_items", type: :request do
       item_response = JSON.parse(response.body)
       expect(item_response['name']).to eq('item9')
       expect(item_response['description']).to eq('description9')
-      expect(item_response['unit_price']).to eq(99)
+      expect(item_response['unit_price']).to eq("99.0")
       expect(item_response['merchant_id']).to eq(9)
     end
   end

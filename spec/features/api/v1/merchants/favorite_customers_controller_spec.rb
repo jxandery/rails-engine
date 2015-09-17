@@ -10,9 +10,9 @@ RSpec.describe "/api/v1/merchants", type: :request do
       invoice1 = Invoice.create!(customer_id: customer1.id, merchant_id: merchant.id, status: "success")
       invoice2 = Invoice.create!(customer_id: customer2.id, merchant_id: merchant.id, status: "success")
       invoice3 = Invoice.create!(customer_id: customer2.id, merchant_id: merchant.id, status: "success")
-      transaction1 = Transaction.create!(invoice_id: invoice1.id, credit_card_number: '78', credit_card_expiration_date: '01011978', result: 'success')
-      transaction2 = Transaction.create!(invoice_id: invoice2.id, credit_card_number: '88', credit_card_expiration_date: '08081978', result: 'success')
-      transaction3 = Transaction.create!(invoice_id: invoice3.id, credit_card_number: '78', credit_card_expiration_date: '01011978', result: 'success')
+      transaction1 = Transaction.create!(invoice_id: invoice1.id, credit_card_number: '78', result: 'success')
+      transaction2 = Transaction.create!(invoice_id: invoice2.id, credit_card_number: '88', result: 'success')
+      transaction3 = Transaction.create!(invoice_id: invoice3.id, credit_card_number: '78', result: 'success')
       get "/api/v1/merchants/#{merchant.id}/favorite_customer", format: :json
 
       expect(response).to have_http_status(:ok)
