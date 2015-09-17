@@ -11,10 +11,6 @@ module Api::V1::ApplicationHelper
     Invoice.joins(:transactions).where(transactions: {result: 'success'})
   end
 
-  def invoice_total(invoice)
-    invoice.invoice_items.map {|invoice_item| invoice_item.unit_price * invoice_item.quantity}.reduce(:+)
-  end
-
   def successful_merchant_invoices
     successful_invoices.where(invoices: {merchant_id: params[:merchant_id]})
   end
@@ -52,8 +48,24 @@ module Api::V1::ApplicationHelper
     Transaction.find_by(id: params[:transaction_id])
   end
 
+  def invoice_total(invoice)
+    invoice.invoice_items.map {|invoice_item| invoice_item.unit_price * invoice_item.quantity}.reduce(:+)
+  end
+
   def revenue(invoices)
     invoices.map {|invoice| invoice_total(invoice)}.reduce(:+)
+  end
+
+  def merchant_invoices
+    find_merchant.invoices.joins(:transactions).where(transactions: {result: 'success'})
+  end
+
+  def invoices_by_date
+    if params[:date].nil?
+      find_merchant.invoices
+    else
+      merchant_invoices.find_all {|invoice| invoice.created_at.to_s[0..9] == params[:date][0..9]}
+    end
   end
 
   def favorite_customer
