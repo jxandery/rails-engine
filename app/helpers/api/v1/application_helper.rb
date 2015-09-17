@@ -53,7 +53,8 @@ module Api::V1::ApplicationHelper
   end
 
   def revenue(invoices)
-    invoices.map {|invoice| invoice_total(invoice)}.reduce(:+)
+    i = invoices.joins(:transactions).where(transactions: {result: 'success'})
+    i.map {|invoice| invoice_total(invoice)}.reduce(:+)
   end
 
   def merchant_invoices
@@ -66,6 +67,12 @@ module Api::V1::ApplicationHelper
     else
       merchant_invoices.find_all {|invoice| invoice.created_at.to_s[0..9] == params[:date][0..9]}
     end
+  end
+
+  def all_invoices_by_date
+    i = Invoice.joins(:transactions).where(transactions: {result: 'success'})
+    x = i.find_all {|invoice| invoice.created_at.to_s[0..-5] == params[:date]}
+    x.map {|invoice| invoice_total(invoice)}.reduce(:+)
   end
 
   def favorite_customer
