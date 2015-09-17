@@ -12,18 +12,22 @@ RSpec.describe "/api/v1/merchants", type: :request do
       merchant1 = Merchant.create!(name: 'Jorge')
       invoice1 = Invoice.create!(customer_id: customer1.id, merchant_id: merchant1.id, status: "success")
       invoice2 = Invoice.create!(customer_id: customer1.id, merchant_id: merchant1.id, status: "success")
+      Transaction.create!(invoice_id: invoice1.id, credit_card_number: '78', result: 'success')
+      Transaction.create!(invoice_id: invoice2.id, credit_card_number: '78', result: 'success')
       invoice_item1 = InvoiceItem.create!(invoice_id: invoice1.id, item_id: 18, quantity: 1, unit_price: 17)
       invoice_item2 = InvoiceItem.create!(invoice_id: invoice2.id, item_id: 18, quantity: 2, unit_price: 17)
 
       # second merchant has 1 invoices and 2 items sold qty 2
       merchant2 = Merchant.create!(name: 'Austen')
       invoice3 = Invoice.create!(customer_id: customer1.id, merchant_id: merchant2.id, status: "success")
+      Transaction.create!(invoice_id: invoice3.id, credit_card_number: '78', result: 'success')
       invoice_item3 = InvoiceItem.create!(invoice_id: invoice3.id, item_id: 18, quantity: 1, unit_price: 17)
       invoice_item4 = InvoiceItem.create!(invoice_id: invoice3.id, item_id: 18, quantity: 1, unit_price: 17)
 
       # third merchant has 1 invoices and 2 items sold qty 8
       merchant3 = Merchant.create!(name: 'Bill')
       invoice4 = Invoice.create!(customer_id: customer1.id, merchant_id: merchant3.id, status: "success")
+      Transaction.create!(invoice_id: invoice4.id, credit_card_number: '78', result: 'success')
       invoice_item5 = InvoiceItem.create!(invoice_id: invoice4.id, item_id: 18, quantity: 6, unit_price: 17)
       invoice_item6 = InvoiceItem.create!(invoice_id: invoice4.id, item_id: 18, quantity: 2, unit_price: 17)
 
@@ -31,6 +35,8 @@ RSpec.describe "/api/v1/merchants", type: :request do
       merchant4 = Merchant.create!(name: 'John')
       invoice5 = Invoice.create!(customer_id: customer1.id, merchant_id: merchant4.id, status: "success")
       invoice6 = Invoice.create!(customer_id: customer1.id, merchant_id: merchant4.id, status: "success")
+      Transaction.create!(invoice_id: invoice5.id, credit_card_number: '78', result: 'success')
+      Transaction.create!(invoice_id: invoice6.id, credit_card_number: '78', result: 'success')
       invoice_item7 = InvoiceItem.create!(invoice_id: invoice5.id, item_id: 18, quantity: 1, unit_price: 17)
       invoice_item8 = InvoiceItem.create!(invoice_id: invoice6.id, item_id: 18, quantity: 4, unit_price: 17)
 
@@ -38,6 +44,8 @@ RSpec.describe "/api/v1/merchants", type: :request do
       merchant5 = Merchant.create!(name: 'Steve')
       invoice7 = Invoice.create!(customer_id: customer1.id, merchant_id: merchant5.id, status: "success")
       invoice8 = Invoice.create!(customer_id: customer1.id, merchant_id: merchant5.id, status: "success")
+      Transaction.create!(invoice_id: invoice7.id, credit_card_number: '78', result: 'success')
+      Transaction.create!(invoice_id: invoice8.id, credit_card_number: '78', result: 'success')
       invoice_item9 = InvoiceItem.create!(invoice_id: invoice7.id, item_id: 18, quantity: 1, unit_price: 17)
       invoice_item10 = InvoiceItem.create!(invoice_id: invoice8.id, item_id: 18, quantity: 3, unit_price: 17)
 

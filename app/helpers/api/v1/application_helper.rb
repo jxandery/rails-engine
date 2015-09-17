@@ -71,7 +71,8 @@ module Api::V1::ApplicationHelper
   end
 
   def item_count(merchant_id)
-    Merchant.find(merchant_id).invoices.joins(:invoice_items).sum(:quantity)
+    successful_invoices = Merchant.find(merchant_id).invoices.joins(:transactions).where(transactions: {result: 'success'})
+    successful_invoices.joins(:invoice_items).sum(:quantity)
   end
 
   def most_items
