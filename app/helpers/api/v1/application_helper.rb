@@ -1,18 +1,11 @@
 module Api::V1::ApplicationHelper
 
-  def successful_invoices
-    # may need to change this method
-    # currently invoice has many transactions
-    # those transactions can be both success and failed
-    #
-    # as the method is currently defined, if any of the transactions are successful,
-    # then the invoice is listed as successful
-    # may want to consider changing/writing the test and method to if any transactions.result == 'failed'
-    Invoice.joins(:transactions).where(transactions: {result: 'success'})
+  def successful_invoices(invoices)
+    invoices.joins(:transactions).where(transactions: {result: 'success'})
   end
 
   def successful_merchant_invoices
-    successful_invoices.where(invoices: {merchant_id: params[:merchant_id]})
+    successful_invoices(find_merchant.invoices)
   end
 
   def customer_invoices
@@ -24,8 +17,8 @@ module Api::V1::ApplicationHelper
   end
 
   def successful_customer_invoices
-    invoices = successful_invoices.where(invoices: {customer_id: params[:customer_id]})
-    invoices.group_by {|x| x.merchant_id}.first.last.first.merchant_id
+    i = successful_invoices(find_customer.invoices)
+    i.group_by {|x| x.merchant_id}.first.last.first.merchant_id
   end
 
   def find_invoice_item
@@ -53,12 +46,11 @@ module Api::V1::ApplicationHelper
   end
 
   def revenue(invoices)
-    i = invoices.joins(:transactions).where(transactions: {result: 'success'})
-    i.map {|invoice| invoice_total(invoice)}.reduce(:+)
+    successful_invoices(invoices).map {|invoice| invoice_total(invoice)}.reduce(:+)
   end
 
   def merchant_invoices
-    find_merchant.invoices.joins(:transactions).where(transactions: {result: 'success'})
+    successful_invoices(find_merchant.invoices)
   end
 
   def invoices_by_date
