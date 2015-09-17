@@ -41,6 +41,7 @@ Rails.application.routes.draw do
       get '/merchants/find_all',      to: 'merchants#find_all'
       get '/merchants/random',        to: 'merchants#random'
       get '/merchants/most_items',    to: 'merchants/most_items#index'
+      get '/merchants/most_revenue',    to: 'merchants/most_revenues#index'
       resources   :merchants,                       except: [:new, :edit] do
         resources :items,                           only:   [:index], module: :merchants
         resources :invoices,                        only:   [:index], module: :merchants

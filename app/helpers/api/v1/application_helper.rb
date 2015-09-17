@@ -52,8 +52,8 @@ module Api::V1::ApplicationHelper
     Transaction.find_by(id: params[:transaction_id])
   end
 
-  def revenue
-    successful_merchant_invoices.map {|invoice| invoice_total(invoice)}.reduce(:+)
+  def revenue(invoices)
+    invoices.map {|invoice| invoice_total(invoice)}.reduce(:+)
   end
 
   def favorite_customer
@@ -65,7 +65,7 @@ module Api::V1::ApplicationHelper
   end
 
   def customers_with_pending_invoices
-    (Invoice.all - successful_merchant_invoices).map do |invoice|
+    (Invoice.where(merchant_id: params["merchant_id"].to_i) - successful_merchant_invoices).map do |invoice|
       Customer.find(invoice.customer_id)
     end
   end
@@ -77,6 +77,18 @@ module Api::V1::ApplicationHelper
   def most_items
     merchants = Merchant.all.sort_by {|merch| item_count(merch.id)}.reverse!
     merchants.first(params["quantity"].to_i).to_json
+  end
+
+  def top_merchants
+    Merchant.all.map do |merch|
+      [revenue(merch.invoices), merch]
+    end.sort.reverse!
+  end
+
+  def most_revenue
+    top_merchants.map do |merch|
+      merch[1]
+    end.first(params["quantity"].to_i)
   end
 end
 
