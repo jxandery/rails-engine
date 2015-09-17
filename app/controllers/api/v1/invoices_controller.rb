@@ -23,6 +23,6 @@ class Api::V1::InvoicesController < Api::V1::ApplicationController
   private
 
   def find_params
-    params.permit(:customer_id, :merchant_id, :status, :created_at, :updated_at)
+    params.permit(:id, :customer_id, :merchant_id, :status, :created_at, :updated_at)
   end
 end
