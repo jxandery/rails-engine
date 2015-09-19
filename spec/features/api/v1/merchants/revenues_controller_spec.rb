@@ -50,7 +50,7 @@ RSpec.describe "/api/v1/merchants", type: :request do
       transaction1 = Transaction.create!(invoice_id: invoice1.id, credit_card_number: '78', result: 'success')
       transaction2 = Transaction.create!(invoice_id: invoice2.id, credit_card_number: '78', result: 'success')
       transaction3 = Transaction.create!(invoice_id: invoice3.id, credit_card_number: '9807', result: 'success')
-      get "/api/v1/merchants/#{merchant.id}/revenue", date: "2012-03-16", format: :json
+      get "/api/v1/merchants/#{merchant1.id}/revenue", date: "2012-03-16", format: :json
 
       expect(response).to have_http_status(:ok)
       revenue_response = JSON.parse(response.body)
