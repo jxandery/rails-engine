@@ -36,8 +36,8 @@ module Api::V1::ApplicationHelper
     successful_invoices(find_merchant.invoices)
   end
 
-  def customer_invoices
-    successful_merchant_invoices.group_by {|invoice| invoice.customer_id}
+  def merchant_invoices
+    successful_invoices(find_merchant.invoices)
   end
 
   def successful_customer_invoices
@@ -45,12 +45,12 @@ module Api::V1::ApplicationHelper
     i.group_by {|x| x.merchant_id}.first.last.first.merchant_id
   end
 
-  def revenue(invoices)
-    successful_invoices(invoices).map {|invoice| invoice_total(invoice)}.reduce(:+)
+  def customer_invoices
+    successful_merchant_invoices.group_by {|invoice| invoice.customer_id}
   end
 
-  def merchant_invoices
-    successful_invoices(find_merchant.invoices)
+  def revenue(invoices)
+    successful_invoices(invoices).map {|invoice| invoice_total(invoice)}.reduce(:+)
   end
 
   def invoices_by_date
