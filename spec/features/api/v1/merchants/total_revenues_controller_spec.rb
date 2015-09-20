@@ -23,8 +23,8 @@ RSpec.describe "/api/v1/merchants/:merchant_id/total_revenue", type: :request do
 
       expect(response).to have_http_status(:ok)
       revenue_response = JSON.parse(response.body)
-      expect(revenue_response.class).to eq(Array)
-      expect(revenue_response["revenue"].to_i).to eq(210)
+      expect(revenue_response.class).to eq(Hash)
+      expect(revenue_response["revenue"].to_i).to eq(120)
     end
   end
 end
